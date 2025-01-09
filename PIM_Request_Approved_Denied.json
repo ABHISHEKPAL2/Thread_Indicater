@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-cguard-azure | where activityDisplayName = \"Request Approved\" or activityDisplayName = \"Request Denied\" | eval entity = initiatedBy.user.userPrincipalName, entity_type = \"user\", Useripaddress = initiatedBy.user.ipAddress, inviteduserPrincipalName = targetResources.userPrincipalName, Oldusertype = targetResources.modifiedProperties.oldValue, Newusertype = targetResources.modifiedProperties.newValue",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "PIM Request Approved Denied",
+        "event_category": "User Privilege Management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A PIM request was {{activityDisplayName:-}} by: {{entity:-}} ({{entity_type:-}}), with IP address: {{Useripaddress:-}}. Target user: {{inviteduserPrincipalName:-}}, with Old User Type: {{Oldusertype:-}}, and New User Type: {{Newusertype:-}}."
+    },
+    "description": "This rule monitors Azure Privileged Identity Management (PIM) requests and logs when access requests are either approved or denied. It captures user details, changes in roles, and initiator information.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

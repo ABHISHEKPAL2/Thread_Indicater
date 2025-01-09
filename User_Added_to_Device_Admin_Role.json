@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Add member to role\" and category = \"RoleManagement\" | eval displayName = initiatedBy.app.displayName, entity = targetResources.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "User Added to Device Admin Role",
+        "event_category": "Role Management",
+        "severity": "high",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A user was added to a critical role (Device Admin) by {{entity:-}} using application: {{displayName:-}}. This activity should be reviewed to ensure it follows security policies."
+    },
+    "description": "This rule monitors when a user is added to a critical role such as Device Admin in Azure AD. Adding users to such roles should be carefully controlled, and any changes need to be reviewed for potential security risks.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

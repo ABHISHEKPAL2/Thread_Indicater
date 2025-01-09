@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where category = \"UserManagement\" and activityDisplayName = \"Update user\" and targetResources.modifiedProperties.displayName = \"UserType\" and targetResources.modifiedProperties.oldValue = \"Guest\" and targetResources.modifiedProperties.newValue = \"Member\" | eval entity = initiatedBy.user.userPrincipalName, entity_type = \"user\", target_entity = targetResources.userPrincipalName, old_user_type = targetResources.modifiedProperties.oldValue, new_user_type = targetResources.modifiedProperties.newValue",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Guest to Member Conversion",
+        "event_category": "User Management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A user has been converted from a guest to a member. User: {{entity:-}}, Invited user: {{target_entity:-}}, Old User Type: {{old_user_type:-}}, New User Type: {{new_user_type:-}}. Verify if this change was legitimate and authorized."
+    },
+    "description": "This rule monitors changes in user type, specifically when a user is converted from a guest to a member. Review such activities to ensure they are legitimate and authorized.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

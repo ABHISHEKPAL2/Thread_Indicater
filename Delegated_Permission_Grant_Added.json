@@ -1,0 +1,60 @@
+<<<<<<< HEAD
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Add delegated permission grant\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Delegated Permission Grant Added",
+        "event_category": "Permission Management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A delegated permission grant was added by user: {{entity:-}} using IP address: {{ipAddress:-}}. This activity should be reviewed to ensure it follows security policies."
+    },
+    "description": "This rule monitors when a delegated permission grant is added in Azure AD. These changes should be carefully reviewed to ensure they are in line with security and access control policies.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+=======
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Add delegated permission grant\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Delegated Permission Grant Added",
+        "event_category": "Permission Management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A delegated permission grant was added by user: {{entity:-}} using IP address: {{ipAddress:-}}. This activity should be reviewed to ensure it follows security policies."
+    },
+    "description": "This rule monitors when a delegated permission grant is added in Azure AD. These changes should be carefully reviewed to ensure they are in line with security and access control policies.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+>>>>>>> 1774978531b26a7fe82acaf77e498da59f2367c4
+}

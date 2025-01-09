@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Invite external user\" and category = \"UserManagement\" and not initiatedBy.user.userPrincipalName = \"ranjay.chaubey@seceon.ai\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Non-Approved Guest User Invitation",
+        "event_category": "User Management",
+        "severity": "high",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A non-approved user attempted to invite an external user to the tenant. Invited by: {{entity:-}}, with IP address: {{ipAddress:-}}."
+    },
+    "description": "This rule monitors for invitations to external users by individuals who are not approved guest inviters. Unauthorized invitations may indicate a security risk or policy violation, requiring review and remediation.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

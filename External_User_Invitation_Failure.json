@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Invite external user\" and result = \"failure\" | eval entity = initiatedBy.user.userPrincipalName, entity_type = \"user\", target_entity = targetResources.userPrincipalName",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "External User Invitation Failure",
+        "event_category": "User Management",
+        "severity": "high",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "An external user invitation attempt failed for {{entity:-}}, with the target user being {{target_entity:-}}. Review this failure to determine if it was a legitimate attempt or a potential security issue."
+    },
+    "description": "This rule monitors failed external user invitations, which could indicate an issue with security policies, account restrictions, or unauthorized actions. Immediate review of such events is recommended.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

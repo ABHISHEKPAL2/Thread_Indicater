@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Add member to group\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Group Membership Addition",
+        "event_category": "Group Management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A user was added to a group with userPrincipalName: {{entity:-}}, originating from IP address: {{ipAddress:-}}. This event could suggest changes to user group memberships that require review."
+    },
+    "description": "This rule tracks the addition of users to groups, which can be important for identifying potential privilege escalation or unauthorized group membership changes.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

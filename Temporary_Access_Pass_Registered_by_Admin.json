@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Admin registered security info\" and resultReason = \"Admin registered temporary access pass method for user\" | eval entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Temporary Access Pass Registered by Admin",
+        "event_category": "Identity & Access Management",
+        "severity": "high",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "An admin registered a temporary access pass for the user: {{entity:-}}. Verify whether this action was authorized."
+    },
+    "description": "This rule detects when an admin registers a temporary access pass for a user, which could indicate an unauthorized change to user access controls.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

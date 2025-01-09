@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Add owner to application\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Owner Added to Application",
+        "event_category": "Application Management",
+        "severity": "high",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "An owner was added to an application by user: {{entity:-}} using IP address: {{ipAddress:-}}. This action should be reviewed for compliance with security and role management policies."
+    },
+    "description": "This rule monitors when an owner is added to an application in Azure AD. Such changes should be reviewed to ensure they comply with security and role management policies.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"User registered security info\" and category = \"UserManagement\" and loggedByService = \"Authentication Methods\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "User Registered Security Info",
+        "event_category": "User Management and Authentication",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A user registered security information in the User Management section with userPrincipalName: {{entity:-}} using IP address: {{ipAddress:-}}. This event may indicate changes to the user's authentication setup."
+    },
+    "description": "This rule tracks when a user registers security information, a part of user management, which may suggest changes in authentication methods or setup within Azure AD.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

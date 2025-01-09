@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Update conditional access policy\" | eval ipAddress = initiatedBy.user.ipAddress, userId = initiatedBy.user.id, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Conditional Access Policy Update",
+        "event_category": "Conditional Access",
+        "severity": "critical",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A conditional access policy was updated by user: {{entity:-}}, indicating potential unauthorized changes or malicious activity."
+    },
+    "description": "This rule monitors for updates to conditional access policies, which may indicate unauthorized changes or malicious activity. Immediate review and validation of such changes are recommended to ensure compliance and security.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

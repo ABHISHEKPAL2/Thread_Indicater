@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where loggedByService = \"AAD Management UX\" and category = \"Policy\" and activityDisplayName = \"Update User Risk and MFA Registration Policy\" | eval entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Update User Risk and MFA Registration Policy",
+        "event_category": "Identity & Access Management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A user risk and MFA registration policy was updated by {{entity:-}}. Verify whether this action was authorized."
+    },
+    "description": "This rule detects when the User Risk and MFA Registration Policy is updated, which may indicate an authorized or unauthorized modification of user access security settings.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

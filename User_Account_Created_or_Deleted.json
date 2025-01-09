@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where (activityDisplayName = \"Add user\" or activityDisplayName = \"Delete user\") and result = \"success\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "User Account Created or Deleted",
+        "event_category": "Account Management",
+        "severity": "high",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A user account was {{activityDisplayName}} by {{entity:-}} with IP address: {{ipAddress:-}}. This could indicate account provisioning or removal activity requiring review."
+    },
+    "description": "This rule monitors for user account additions or deletions in Azure Active Directory that were successful. Such activities should be reviewed to ensure they align with organizational policies and are not malicious.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

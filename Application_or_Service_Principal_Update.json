@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Update service principal\" or activityDisplayName = \"Update Application\" | eval displayName = initiatedBy.app.displayName, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Application or Service Principal Update",
+        "event_category": "Application Management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Audit Logs",
+        "message": "An application or service principal was updated by user: {{entity:-}} using application: {{displayName:-}}. This update should be reviewed for security and compliance."
+    },
+    "description": "This rule monitors updates to applications or service principals in Azure AD. Such updates should be verified to ensure they align with organizational security policies.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

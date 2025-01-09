@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Add delegated permission grant\" or activityDisplayName = \"Add app role assignment grant to user\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Permission or Role Assignment Change",
+        "event_category": "Permission Management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "A permission or role assignment was changed by user: {{entity:-}} using IP address: {{ipAddress:-}}. This activity needs review to ensure it complies with security policies."
+    },
+    "description": "This rule monitors changes in delegated permission grants or app role assignments in Azure AD. These changes should be reviewed to ensure compliance with security policies.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

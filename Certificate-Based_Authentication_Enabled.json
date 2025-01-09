@@ -1,0 +1,29 @@
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where activityDisplayName = \"Authentication Methods Policy Update\" and targetResources.modifiedProperties.displayName = \"AuthenticationMethodsPolicy\" | eval ipAddress = initiatedBy.user.ipAddress, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\"",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Certificate-Based Authentication Enabled",
+        "event_category": "Authentication Methods",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "The Authentication Methods Policy was updated to enable certificate-based authentication by user: {{entity:-}}. This may indicate a configuration change requiring review."
+    },
+    "description": "This rule monitors for updates to the Authentication Methods Policy, specifically enabling certificate-based authentication. This configuration change could be critical for compliance or security and should be validated.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+}

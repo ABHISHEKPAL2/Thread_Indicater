@@ -1,0 +1,60 @@
+<<<<<<< HEAD
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where match(activityDisplayName, \"Remove owner from service principal\") or match(activityDisplayName, \"Remove owner from application\") | eval targetResourceDisplayName = targetResources.modifiedProperties.displayName, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\", ipAddress = initiatedBy.user.ipAddress, additionalDetailsUserAgent = additionalDetails.value",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Owner Removed from Application or Service Principal",
+        "event_category": "application_service_principal_management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "Owner removed from service principal or application by user: {{entity}} with IP address: {{ipAddress}} on {{activityDateTime}}. User agent: {{additionalDetailsUserAgent}}."
+    },
+    "description": "This rule monitors when an owner is removed from an application or service principal in Azure AD. This activity should be reviewed to ensure it is valid and in line with security policies.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+=======
+{
+    "rule_id": "<rule_id>",
+    "status": "active",
+    "tenant_id": "ABC1234",
+    "job": {
+        "query": "source = seceon-azure-ad-sec8149 | where match(activityDisplayName, \"Remove owner from service principal\") or match(activityDisplayName, \"Remove owner from application\") | eval targetResourceDisplayName = targetResources.modifiedProperties.displayName, entity = initiatedBy.user.userPrincipalName, entity_type = \"user\", ipAddress = initiatedBy.user.ipAddress, additionalDetailsUserAgent = additionalDetails.value",
+        "query_type": "PPL",
+        "job_type": "detection",
+        "logsource": {
+            "category": "Cloud",
+            "product": "Azure",
+            "service": "Audit"
+        }
+    },
+    "threat_indicators_fields": {
+        "event_type_id": "<rule_id>",
+        "event_type_name": "Owner Removed from Application or Service Principal",
+        "event_category": "application_service_principal_management",
+        "severity": "medium",
+        "event_origin": "cloud",
+        "source_data_type": "Azure Activity Logs",
+        "message": "Owner removed from service principal or application by user: {{entity}} with IP address: {{ipAddress}} on {{activityDateTime}}. User agent: {{additionalDetailsUserAgent}}."
+    },
+    "description": "This rule monitors when an owner is removed from an application or service principal in Azure AD. This activity should be reviewed to ensure it is valid and in line with security policies.",
+    "schedule": {
+        "type": "recurring",
+        "interval": "*/15 * * * *"
+    }
+>>>>>>> 1774978531b26a7fe82acaf77e498da59f2367c4
+}
